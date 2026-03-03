@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.12.2026.01.12.18 AS builder
+FROM public.ecr.aws/lambda/python:3.12.2026.02.27.17 AS builder
 
 WORKDIR /build
 
@@ -8,13 +8,13 @@ COPY pyproject.toml poetry.lock ./
 RUN python -m venv .venv && \
     source .venv/bin/activate && \
     pip install --upgrade build && \
-    pip install poetry==2.0.1 && \
+    pip install poetry==2.1.0 && \
     poetry self add poetry-plugin-export && \
     poetry export --format requirements.txt --output requirements.txt --without-hashes --without dev && \
     cd common-lib && \
     poetry build
 
-FROM public.ecr.aws/lambda/python:3.12.2026.01.12.18
+FROM public.ecr.aws/lambda/python:3.12.2026.02.27.17
 
 WORKDIR /ws
 
