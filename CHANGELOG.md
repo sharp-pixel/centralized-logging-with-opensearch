@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.8] - 2026-03-03
+
+### Security
+
+- Updated cryptography package to address [CVE-2026-26007](https://avd.aquasec.com/nvd/2026/cve-2026-26007/)
+- Updated axios package to address [CVE-2026-25639](https://avd.aquasec.com/nvd/2026/cve-2026-25639/)
+- Updated diff package to address [CVE-2026-24001](https://avd.aquasec.com/nvd/2026/cve-2026-24001/)
+- Updated fast-xml-parser package to address [CVE-2026-25128](https://avd.aquasec.com/nvd/2026/cve-2026-25128/)
+- Updated lodash package to address [CVE-2025-13465](https://avd.aquasec.com/nvd/2025/cve-2025-13465/)
+- Updated aws-for-fluent-bit image version to address CVEs for libxml2 package
+- Updated minimatch package to address [CVE-2026-26996](https://avd.aquasec.com/nvd/cve-2026-26996)
+- Updated rollup package to address [CVE-2026-27606](https://avd.aquasec.com/nvd/2026/cve-2026-27606/)
+
 ## [2.4.7] - 2026-01-14
 
 ### Security

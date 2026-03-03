@@ -1,7 +1,7 @@
 {
   "name": "centralized-logging-with-opensearch",
   "description": "Centralized logging with opensearch (SO8025)",
-  "version": "2.4.7",
+  "version": "2.4.8",
   "license": "Apache-2.0",
   "author": {
     "name": "Amazon Web Services",
@@ -29,14 +29,14 @@
     "ts-jest": "29.4.0",
     "ts-node": "10.9.1",
     "typescript": "5.2.2",
-    "@typescript-eslint/eslint-plugin": "6.10.0",
-    "@typescript-eslint/parser": "6.10.0",
-    "eslint": "8.53.0",
+    "@typescript-eslint/eslint-plugin": "8.56.1",
+    "@typescript-eslint/parser": "8.56.1",
+    "eslint": "9.39.3",
     "eslint-config-prettier": "9.0.0",
-    "eslint-import-resolver-node": "^0.3.6",
-    "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-import": "2.29.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-import-resolver-node": "^0.3.9",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
     "cdk-nag": "~2.35.51"
   },
   "dependencies": {
@@ -51,5 +51,13 @@
   },
   "resolutions": {
     "json5": "2.2.3"
+  },
+  "overrides": {
+    "diff": "4.0.4",
+    "ajv": "8.18.0",
+    "minimatch@3.x": "3.1.4",
+    "minimatch@9.x": "9.0.7",
+    "minimatch@5.x": "5.1.8",
+    "minimatch@10.x": "10.2.3"
   }
 }
