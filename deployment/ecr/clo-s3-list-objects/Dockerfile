@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.12.2026.03.26.16 AS builder
+FROM public.ecr.aws/lambda/python:3.12.2026.03.31.11 AS builder
 
 WORKDIR /build
 
@@ -14,7 +14,7 @@ RUN python -m venv .venv && \
     cd common-lib && \
     poetry build
 
-FROM public.ecr.aws/lambda/python:3.12.2026.03.26.16
+FROM public.ecr.aws/lambda/python:3.12.2026.03.31.11
 
 WORKDIR /ws
 
@@ -22,7 +22,8 @@ COPY --from=builder /build/common-lib/dist/commonlib-0.1.0.tar.gz .
 COPY --from=builder /build/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir commonlib-0.1.0.tar.gz
+    pip install --no-cache-dir commonlib-0.1.0.tar.gz && \
+    pip install --no-cache-dir "jaraco.context>=6.1.0" "wheel>=0.46.2"
 
 COPY . .
 

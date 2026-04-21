@@ -16,11 +16,11 @@ limitations under the License.
 import React from "react";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 import AmplifyAppRouter from "../AmplifyAppRouter";
 import configureStore from "redux-mock-store";
 
-jest.mock("aws-amplify");
+jest.mock("@aws-amplify/auth");
 jest.mock("../SignedInApp", () => {
   const MockedSignedInApp = () => <div>SignedInApp Component</div>;
   MockedSignedInApp.displayName = "SignedInApp";

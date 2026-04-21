@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import SignOut from "../SignOut";
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 
 jest.mock("react-i18next", () => ({
   useTranslation: () => {

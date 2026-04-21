@@ -12,7 +12,7 @@ import { ApolloLink } from "apollo-link";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import gql from "graphql-tag";
 import { AMPLIFY_CONFIG_JSON } from "./const";
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 import { AmplifyConfigType, AppSyncAuthType } from "types";
 import { ErrorCode } from "API";
 import cloneDeep from "lodash.clonedeep";

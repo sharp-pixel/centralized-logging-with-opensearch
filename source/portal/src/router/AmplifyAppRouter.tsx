@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, { useEffect, useState } from "react";
-import { Auth, Hub } from "aws-amplify";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import React, { useEffect, useRef, useState } from "react";
+import { Auth } from "@aws-amplify/auth";
+import { Hub } from "@aws-amplify/core";
 
 import { AMPLIFY_CONFIG_JSON } from "assets/js/const";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ import { Alert } from "assets/js/alert";
 
 const AmplifyAppRouter: React.FC = () => {
   const { t } = useTranslation();
-  const [authState, setAuthState] = useState<AuthState>();
+  const [authState, setAuthState] = useState<string>();
 
   const dispatch = useDispatch();
   const onAuthEvent = (payload: any) => {
@@ -40,6 +40,12 @@ const AmplifyAppRouter: React.FC = () => {
       if (headerElement) {
         Alert(t("signin.reSignInDesc"), t("signin.reSignIn"), "warning", true);
       }
+    } else if (payload?.event === "signOut") {
+      dispatch({
+        type: ActionType.UPDATE_USER_EMAIL,
+        email: undefined,
+      });
+      setAuthState(undefined);
     } else {
       Auth?.currentAuthenticatedUser()
         .then((authData: any) => {
@@ -47,42 +53,40 @@ const AmplifyAppRouter: React.FC = () => {
             type: ActionType.UPDATE_USER_EMAIL,
             email: authData?.attributes?.email,
           });
-          setAuthState(AuthState.SignedIn);
+          setAuthState("signedin");
         })
         .catch((error) => {
           console.error(error);
         });
     }
   };
-  Hub.listen("auth", (data) => {
-    const { payload } = data;
-    onAuthEvent(payload);
+
+  const onAuthEventRef = useRef(onAuthEvent);
+  useEffect(() => {
+    onAuthEventRef.current = onAuthEvent;
   });
 
   useEffect(() => {
-    if (authState === undefined) {
-      Auth?.currentAuthenticatedUser()
-        .then((authData: any) => {
-          dispatch({
-            type: ActionType.UPDATE_USER_EMAIL,
-            email: authData?.attributes?.email,
-          });
-          setAuthState(AuthState.SignedIn);
-        })
-        .catch((error) => {
-          console.info(error?.message);
-        });
-    }
-    return onAuthUIStateChange((nextAuthState, authData: any) => {
-      setAuthState(nextAuthState);
-      dispatch({
-        type: ActionType.UPDATE_USER_EMAIL,
-        email: authData?.attributes?.email,
-      });
+    const unsubscribe = Hub.listen("auth", (data) => {
+      onAuthEventRef.current(data.payload);
     });
-  }, [authState]);
 
-  return authState === AuthState.SignedIn ? (
+    Auth?.currentAuthenticatedUser()
+      .then((authData: any) => {
+        dispatch({
+          type: ActionType.UPDATE_USER_EMAIL,
+          email: authData?.attributes?.email,
+        });
+        setAuthState("signedin");
+      })
+      .catch((error) => {
+        console.info(error?.message);
+      });
+
+    return unsubscribe;
+  }, []);
+
+  return authState === "signedin" ? (
     <SignedInApp />
   ) : (
     <AmplifyLoginPage />

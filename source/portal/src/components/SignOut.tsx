@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 import { AMPLIFY_CONFIG_JSON } from "assets/js/const";
 import { useTranslation } from "react-i18next";
 
