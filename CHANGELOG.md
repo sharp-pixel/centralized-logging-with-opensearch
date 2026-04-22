@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.10] - 2026-04-20
+
+### Security
+
+- Updated axios package to address [CVE-2025-62718](https://avd.aquasec.com/nvd/cve-2025-62718) and [CVE-2026-40175](https://avd.aquasec.com/nvd/cve-2026-40175)
+- Updated jsonpath package to address [CVE-2026-1615](https://avd.aquasec.com/nvd/cve-2026-1615)
+- Updated underscore package to address [CVE-2026-27601](https://avd.aquasec.com/nvd/cve-2026-27601)
+- Updated lodash package to address [CVE-2026-2950](https://avd.aquasec.com/nvd/cve-2026-2950) and [CVE-2026-4800](https://avd.aquasec.com/nvd/cve-2026-4800)
+- Updated fast-xml-parser package to address [CVE-2026-33036](https://avd.aquasec.com/nvd/cve-2026-33036) and [CVE-2026-33349](https://avd.aquasec.com/nvd/cve-2026-33349)
+- Updated node-forge package to address [CVE-2026-33891](https://avd.aquasec.com/nvd/cve-2026-33891), [CVE-2026-33894](https://avd.aquasec.com/nvd/cve-2026-33894), [CVE-2026-33895](https://avd.aquasec.com/nvd/cve-2026-33895), and [CVE-2026-33896](https://avd.aquasec.com/nvd/cve-2026-33896)
+- Updated serialize-javascript package to address [CVE-2026-34043](https://avd.aquasec.com/nvd/cve-2026-34043)
+- Updated follow-redirects package to address [GHSA-r4q5-vmmm-2653](https://github.com/advisories/GHSA-r4q5-vmmm-2653)
+- Updated brace-expansion package to address [CVE-2026-33750](https://avd.aquasec.com/nvd/cve-2026-33750)
+- Updated pytest package to address [CVE-2025-71176](https://avd.aquasec.com/nvd/cve-2025-71176)
+- Updated requests package to address [CVE-2026-25645](https://avd.aquasec.com/nvd/cve-2026-25645)
+- Updated cryptography package to address [CVE-2026-34073](https://avd.aquasec.com/nvd/cve-2026-34073) and [CVE-2026-39892](https://avd.aquasec.com/nvd/cve-2026-39892)
+- Updated aws-for-fluent-bit image version to 3.2.5 to address CVEs for libssh, libnghttp2, and openssl packages
+- Updated AWS Lambda container base image to address CVEs for libnghttp2 and openssl packages
+- Updated aws-cdk-lib to address [CVE-2026-33750](https://avd.aquasec.com/nvd/cve-2026-33750)
+
 ## [2.4.9] - 2026-03-31
 
 ### Added

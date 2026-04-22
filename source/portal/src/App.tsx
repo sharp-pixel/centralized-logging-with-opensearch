@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { Amplify, I18n } from "aws-amplify";
+import { Amplify, I18n } from "@aws-amplify/core";
 
 import { AMPLIFY_CONFIG_JSON } from "assets/js/const";
 import { useDispatch } from "react-redux";
