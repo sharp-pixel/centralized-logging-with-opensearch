@@ -139,7 +139,7 @@ export class AppSyncStack extends Construct {
 
     this.graphqlApi = new appsync.GraphqlApi(this, 'API', {
       name: `${Aws.STACK_NAME} - GraphQL APIs`,
-      schema: appsync.SchemaFile.fromAsset(
+      definition: appsync.Definition.fromFile(
         path.join(__dirname, '../../graphql/schema.graphql')
       ),
       authorizationConfig: {
@@ -163,7 +163,7 @@ export class AppSyncStack extends Construct {
       this,
       'AppSyncServiceLinkRoleFn',
       {
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         code: lambda.Code.fromAsset(
           path.join(__dirname, '../../lambda/custom-resource')
         ),

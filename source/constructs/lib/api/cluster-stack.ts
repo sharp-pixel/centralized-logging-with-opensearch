@@ -89,7 +89,7 @@ export class ClusterStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     const cfnClusterTable = this.clusterTable.node.defaultChild as ddb.CfnTable;
@@ -118,7 +118,7 @@ export class ClusterStack extends Construct {
         path.join(__dirname, '../../lambda/api/cluster'),
         {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               'bash',
@@ -128,7 +128,7 @@ export class ClusterStack extends Construct {
           },
         }
       ),
-      compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       description: `${Aws.STACK_NAME} - Lambda layer for OpenSearch Cluster`,
     });
 
@@ -137,7 +137,7 @@ export class ClusterStack extends Construct {
       code: lambda.AssetCode.fromAsset(
         path.join(__dirname, '../../lambda/api/cluster')
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.minutes(3),
       memorySize: 1024,

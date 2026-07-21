@@ -61,7 +61,7 @@ export class AppIngestionFlowStack extends Construct {
       code: lambda.AssetCode.fromAsset(
         path.join(__dirname, '../../lambda/api/pipeline_ingestion_flow')
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'app_ingestion_flow.lambda_handler',
       timeout: Duration.seconds(60),
       memorySize: 128,

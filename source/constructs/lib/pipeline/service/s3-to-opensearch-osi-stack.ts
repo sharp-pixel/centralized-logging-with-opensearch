@@ -449,7 +449,7 @@ export class S3toOpenSearchOSIStack extends Construct {
           {
             bundling: {
               platform: 'linux/amd64',
-              image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+              image: lambda.Runtime.PYTHON_3_12.bundlingImage,
               command: [
                 'bash',
                 '-c',
@@ -458,7 +458,7 @@ export class S3toOpenSearchOSIStack extends Construct {
             },
           }
         ),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
         description: 'Default Lambda layer for OSIProcessorIngestionFlowFn',
       }
     );
@@ -468,7 +468,7 @@ export class S3toOpenSearchOSIStack extends Construct {
       code: lambda.AssetCode.fromAsset(
         path.join(__dirname, '../../../lambda/api/pipeline_ingestion_flow')
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'osi_processor_flow.lambda_handler',
       timeout: Duration.seconds(60),
       memorySize: 128,
@@ -664,7 +664,7 @@ export class S3toOpenSearchOSIStack extends Construct {
       this,
       'LogProcessorHelperFn',
       {
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         code: lambda.Code.fromAsset(
           path.join(__dirname, '../../../lambda/api/pipeline_ingestion_flow')
         ),
@@ -758,7 +758,7 @@ export class S3toOpenSearchOSIStack extends Construct {
 
     // This Lambda is to perform necessary actions during stack creation or update
     const initOSIPipeSMFn = new lambda.Function(this, 'InitOSIPipeSMFn', {
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       code: lambda.Code.fromAsset(
         path.join(__dirname, '../../../lambda/pipeline/common/custom-resource')
       ),
@@ -805,7 +805,7 @@ export class S3toOpenSearchOSIStack extends Construct {
 
     // This Lambda is to perform necessary actions during stack deletion
     const deleteOSIPipeSMFn = new lambda.Function(this, 'DeleteOSIPipeSMFn', {
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       code: lambda.Code.fromAsset(
         path.join(__dirname, '../../../lambda/pipeline/common/custom-resource')
       ),

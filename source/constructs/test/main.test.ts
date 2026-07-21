@@ -37,7 +37,7 @@ describe('MainStack', () => {
         },
       },
       MemorySize: 1024,
-      Runtime: 'python3.11',
+      Runtime: 'python3.12',
       Timeout: 60,
     });
 
@@ -51,7 +51,7 @@ describe('MainStack', () => {
         },
       },
       MemorySize: 1024,
-      Runtime: 'python3.11',
+      Runtime: 'python3.12',
       Timeout: 60,
     });
 
@@ -71,7 +71,7 @@ describe('MainStack', () => {
         },
       },
       MemorySize: 128,
-      Runtime: 'python3.11',
+      Runtime: 'python3.12',
       Timeout: 60,
     });
 
@@ -152,7 +152,7 @@ describe('MainStack', () => {
         },
       },
       MemorySize: 128,
-      Runtime: 'python3.11',
+      Runtime: 'python3.12',
       Timeout: 60,
     });
   });

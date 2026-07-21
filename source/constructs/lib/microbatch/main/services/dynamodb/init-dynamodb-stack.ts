@@ -39,7 +39,7 @@ export class InitDynamoDBStack extends Construct {
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: microBatchKMSStack.encryptionKey,
       timeToLiveAttribute: 'expirationTime',
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     // Override the logical ID
@@ -68,7 +68,7 @@ export class InitDynamoDBStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: microBatchKMSStack.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     // Override the logical ID

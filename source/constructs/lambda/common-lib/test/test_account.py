@@ -36,13 +36,12 @@ def write_data(ddb_table):
 
 
 class TestLinkAccountHelperTrustAccountExists:
-    mock_dynamodb = mock_dynamodb()
-    mock_sts = mock_sts()
-    mock_iam = mock_iam()
-    mock_events = mock_events()
-
     def setup_method(self):
         default_region = os.environ.get("AWS_REGION")
+        self.mock_dynamodb = mock_dynamodb()
+        self.mock_sts = mock_sts()
+        self.mock_iam = mock_iam()
+        self.mock_events = mock_events()
         self.mock_dynamodb.start()
         self.mock_sts.start()
         self.mock_iam.start()
@@ -207,13 +206,12 @@ class TestLinkAccountHelperTrustAccountExists:
 
 
 class TestLinkAccountHelperTrustAccountNotExists:
-    mock_dynamodb = mock_dynamodb()
-    mock_sts = mock_sts()
-    mock_iam = mock_iam()
-    mock_events = mock_events()
-
     def setup_method(self):
         default_region = os.environ.get("AWS_REGION")
+        self.mock_dynamodb = mock_dynamodb()
+        self.mock_sts = mock_sts()
+        self.mock_iam = mock_iam()
+        self.mock_events = mock_events()
         self.mock_dynamodb.start()
         self.mock_sts.start()
         self.mock_iam.start()

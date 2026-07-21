@@ -89,7 +89,7 @@ export class AppPipelineStack extends Construct {
         path.join(__dirname, '../../lambda/api/app_pipeline'),
         {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               'bash',
@@ -99,7 +99,7 @@ export class AppPipelineStack extends Construct {
           },
         }
       ),
-      compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       //compatibleArchitectures: [lambda.Architecture.X86_64, lambda.Architecture.ARM_64],
       description: 'Default Lambda layer for AppPipeline',
     });
@@ -113,7 +113,7 @@ export class AppPipelineStack extends Construct {
       vpc: props.vpc,
       vpcSubnets: { subnetType: SubnetType.PRIVATE_WITH_EGRESS },
       securityGroups: [props.processSg],
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.seconds(60),
       memorySize: 1024,

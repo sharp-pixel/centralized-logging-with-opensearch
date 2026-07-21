@@ -232,7 +232,7 @@ export class OpenSearchInitStack extends Construct {
         path.join(__dirname, '../../../lambda/plugin/standard'),
         {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               'bash',
@@ -242,7 +242,7 @@ export class OpenSearchInitStack extends Construct {
           },
         }
       ),
-      compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       description: 'Default Lambda layer for Log Pipeline',
     });
     // Create the Log Processor Lambda
@@ -272,7 +272,7 @@ export class OpenSearchInitStack extends Construct {
     this.logProcessorFn = new lambda.Function(this, 'LogProcessorFn', {
       description: `${Aws.STACK_NAME} - Function to process and load ${props.logType} logs into OpenSearch`,
       functionName: `${Aws.STACK_NAME}-LogProcessorFn`,
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       code: lambda.Code.fromAsset(
         path.join(__dirname, '../../../lambda/pipeline/log-processor')

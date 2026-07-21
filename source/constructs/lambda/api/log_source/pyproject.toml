@@ -1,24 +1,40 @@
 [project]
 name = "log-source"
+version = "0.0.1"
 description = "LogSource APIs Resolver lambda"
 requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
 dependencies = [
     "pyopenssl (>=26.0.0)",
-    "certifi (>=2024.12.14,<2025.0.0)"
+    "certifi (>=2024.12.14,<2025.0.0)",
 ]
 
-[tool.poetry]
-package-mode = false
+[dependency-groups]
+dev = [
+    "boto3>=1.36.1,<2",
+    "moto~=4.2.13",
+    "pytest>=9.0.3,<10",
+    "pytest-cov>=6.0.0,<7",
+    "pyopenssl>=26.0.0,<27",
+    "certifi>=2024.12.14,<2025",
+    "cryptography>=46.0.7",
+    "commonlib",
+]
 
-[tool.poetry.group.dev.dependencies]
-boto3 = "^1.36.1"
-moto = "~4.2.13"
-pytest = "^9.0.3"
-pytest-cov = "^6.0.0"
-pyopenssl = "^26.0.0"
-certifi = "^2024.12.14"
-cryptography = ">=46.0.7"
+[tool.uv]
+package = false
+default-groups = "all"
+
+[tool.uv.sources]
+commonlib = { path = "../../common-lib", editable = true }
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.11.30,<0.12.0"]
+build-backend = "uv_build"

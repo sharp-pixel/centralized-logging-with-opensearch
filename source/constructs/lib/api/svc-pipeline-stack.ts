@@ -66,7 +66,7 @@ export class SvcPipelineStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     const cfnPipelineTable = this.svcPipelineTable.node
@@ -101,7 +101,7 @@ export class SvcPipelineStack extends Construct {
       code: lambda.AssetCode.fromAsset(
         path.join(__dirname, '../../lambda/api/pipeline')
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.seconds(60),
       memorySize: 1024,

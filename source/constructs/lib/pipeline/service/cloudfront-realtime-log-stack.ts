@@ -506,9 +506,13 @@ class CloudFrontRealTimeLogConfigUpdater extends Construct {
               '../../../lambda/pipeline/common/custom-resource'
             )
           ),
-          runtime: lambda.Runtime.PYTHON_3_11,
+          runtime: lambda.Runtime.PYTHON_3_12,
           timeout: Duration.seconds(60),
-          logRetention: logs.RetentionDays.ONE_MONTH,
+          logGroup: new logs.LogGroup(
+            this,
+            'cf-rt-log-config-updater-log-group',
+            { retention: logs.RetentionDays.ONE_MONTH }
+          ),
           handler: 'cloudfront_realtime_log_config_updater.on_event',
           layers: [SharedPythonLayer.getInstance(this)],
           initialPolicy: [

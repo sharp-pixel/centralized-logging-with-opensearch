@@ -11,20 +11,14 @@ Before you start customizing the solution, make sure you have the following prer
 - NodeJS (v18 or later)
 - Docker
 > if you are using ARM CPU like Apple M1 chip, please run `export DOCKER_DEFAULT_PLATFORM=linux/amd64` for building amd64 container image.
--   Install Poetry. Below is one of the ways to install poetry. For other ways to install poetry, refer [Poetry installation instructions](https://python-poetry.org/docs/#installation)
+- Install [uv](https://docs.astral.sh/uv/getting-started/installation/), the Python package and project manager used by the build scripts.
 
 ```shell
-## Install pipx via pip
-python3 -m pip install --user pipx
-python3 -m pipx ensurepath
+## Install with Homebrew
+brew install uv
 
-## OR Install pipx via brew
-brew install pipx
-pipx ensurepath
-
-## Install poetry
-pipx install poetry
-pipx inject poetry poetry-plugin-export
+## OR install with pipx
+pipx install uv
 ```
 
 Clone the repository and make desired code changes.
@@ -129,4 +123,3 @@ Once you have uploaded the distributable to your Amazon S3 bucket, you can start
     Get the link of the solution template uploaded to your Amazon S3 bucket.
 
     Then you can deploy the solution to your account by launching a new AWS CloudFormation stack using the link of the solution template in Amazon S3.
-

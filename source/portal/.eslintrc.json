@@ -25,6 +25,7 @@
   "rules": {
     "eqeqeq": "warn",
     "import/no-duplicates": "error",
+    "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-explicit-any": "off"
   }
 }

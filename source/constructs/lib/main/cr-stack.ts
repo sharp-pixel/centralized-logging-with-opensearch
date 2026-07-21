@@ -138,7 +138,7 @@ export class CustomResourceStack extends Construct {
     // This Lambda is to perform necessary actions during stack creation or update
     // Including export the aws-exports.json to web portal bucket etc.
     this.initConfigFn = new lambda.Function(this, 'InitConfig', {
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       code: lambda.Code.fromAsset(
         path.join(__dirname, '../../lambda/custom-resource')
       ),

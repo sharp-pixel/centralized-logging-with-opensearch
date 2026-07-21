@@ -68,7 +68,7 @@ export class CrossAccountStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
       stream: ddb.StreamViewType.NEW_AND_OLD_IMAGES,
     });
 
@@ -121,7 +121,7 @@ export class CrossAccountStack extends Construct {
         code: lambda.AssetCode.fromAsset(
           path.join(__dirname, '../../lambda/api/cross_account')
         ),
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'lambda_function.lambda_handler',
         timeout: Duration.minutes(15),
         memorySize: 2048,

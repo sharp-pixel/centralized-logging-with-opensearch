@@ -1,40 +1,50 @@
 [project]
 name = "layer"
+version = "0.0.1"
 description = "Lambda layers"
 requires-python = ">=3.10,<4.0.0"
-dependencies = [
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[dependency-groups]
+boto3 = [
+    "boto3>=1.36.1,<2",
+    "botocore>=1.36.1,<2",
+    "s3transfer>=0.11.1,<0.12",
+]
+enrichment = [
+    "user-agents>=2.2.0,<3",
+    "maxminddb>=2.6.3,<3",
+]
+pyarrow = [
+    "pyarrow>=23.0.1,<24",
+    "numpy>=2.2.1,<2.3",
+]
+utils = [
+    "binaryornot>=0.4.4,<0.5",
+    "certifi>=2024.12.14,<2025",
+    "chardet>=5.2.0,<6",
+    "charset-normalizer>=3.4.1,<4",
+    "idna>=3.10,<4",
+    "prettytable>=3.12.0,<4",
+    "requests>=2.33.0,<3",
+    "urllib3>=2.7.0,<3",
+    "wcwidth>=0.2.13,<0.3",
+    "cachetools>=5.5.0,<6",
+    "aws-lambda-powertools>=3.4.1,<4",
 ]
 
-[tool.poetry]
-package-mode = false
+[tool.uv]
+package = false
+default-groups = "all"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.group.boto3.dependencies]
-boto3 = "^1.36.1"
-botocore = "^1.36.1"
-s3transfer = "^0.11.1"
-
-[tool.poetry.group.enrichment.dependencies]
-user-agents = "^2.2.0"
-maxminddb = "^2.6.3"
-
-[tool.poetry.group.pyarrow.dependencies]
-pyarrow = "^19.0.0"
-numpy = "^2.2.1"
-
-[tool.poetry.group.utils.dependencies]
-binaryornot = "^0.4.4"
-certifi = "^2024.12.14"
-chardet = "^5.2.0"
-charset-normalizer = "^3.4.1"
-idna = "^3.10"
-prettytable = "^3.12.0"
-requests = "^2.33.0"
-urllib3 = "^2.7.0"
-wcwidth = "^0.2.13"
-cachetools = "^5.5.0"
-aws-lambda-powertools = "^3.4.1"
-
+requires = ["uv_build>=0.11.30,<0.12.0"]
+build-backend = "uv_build"

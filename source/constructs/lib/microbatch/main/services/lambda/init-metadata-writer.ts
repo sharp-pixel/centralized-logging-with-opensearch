@@ -116,7 +116,7 @@ export class InitLambdaMetadataWriterStack extends Construct {
         ),
         { followSymlinks: SymlinkFollowMode.ALWAYS }
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.minutes(15),
       memorySize: 128,

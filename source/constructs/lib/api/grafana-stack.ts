@@ -78,7 +78,7 @@ export class GrafanaStack extends Construct {
         billingMode: ddb.BillingMode.PAY_PER_REQUEST,
         removalPolicy: RemovalPolicy.DESTROY,
         encryption: ddb.TableEncryption.DEFAULT,
-        pointInTimeRecovery: true,
+        pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
       }
     );
 
@@ -88,7 +88,7 @@ export class GrafanaStack extends Construct {
         path.join(__dirname, '../../lambda/api/grafana'),
         { followSymlinks: SymlinkFollowMode.ALWAYS }
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.seconds(60),
       memorySize: 1024,

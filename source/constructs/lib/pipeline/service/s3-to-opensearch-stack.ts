@@ -258,7 +258,7 @@ export class S3toOpenSearchStack extends Construct {
       'logSourceS3NotificationFn',
       {
         description: `${Aws.STACK_NAME} - Create Log Source S3 Notification Processor`,
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'log_source_s3_bucket_policy_processor.lambda_handler',
         code: lambda.Code.fromAsset(
           path.join(

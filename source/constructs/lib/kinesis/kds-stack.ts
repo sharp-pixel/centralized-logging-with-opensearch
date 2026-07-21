@@ -268,7 +268,7 @@ export class KDSStack extends Construct {
       const scaler = new lambda.Function(this, 'LambdaScaler', {
         code: lambda.Code.fromAsset(path.join(__dirname, 'lambda')),
         handler: 'index.lambda_handler',
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         functionName: scalerFnName,
         environment: {
           CloudWatchAlarmNameIn: cwAlarmInName,

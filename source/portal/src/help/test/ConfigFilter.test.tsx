@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { screen, act } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import ConfigFilter from "../ConfigFilter";
 import { renderWithProviders } from "test-utils";
 import { MemoryRouter } from "react-router-dom";

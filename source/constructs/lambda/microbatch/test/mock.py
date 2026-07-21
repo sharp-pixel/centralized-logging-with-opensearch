@@ -1708,7 +1708,7 @@ def download_maxminddb():
 
     local_path = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/s3_object_replication/enrichment/maxminddb/GeoLite2-City.mmdb"
     if os.path.exists(os.path.dirname(local_path)) is False:
-        os.makedirs(os.path.dirname(local_path), mode=755, exist_ok=True)
+        os.makedirs(os.path.dirname(local_path), mode=0o755, exist_ok=True)
 
     if os.path.exists(local_path) is False:
         r = requests.get(maxminddb_url)

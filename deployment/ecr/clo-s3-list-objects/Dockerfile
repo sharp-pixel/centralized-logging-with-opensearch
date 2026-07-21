@@ -3,16 +3,14 @@ FROM public.ecr.aws/lambda/python:3.12.2026.05.28.13 AS builder
 WORKDIR /build
 
 COPY common-lib ./common-lib
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml uv.lock ./
 
 RUN python -m venv .venv && \
     source .venv/bin/activate && \
-    pip install --upgrade build && \
-    pip install poetry==2.1.0 && \
-    poetry self add poetry-plugin-export && \
-    poetry export --format requirements.txt --output requirements.txt --without-hashes --without dev && \
+    pip install --no-cache-dir uv==0.11.30 && \
+    uv export --locked --no-dev --no-hashes --no-emit-project --output-file requirements.txt && \
     cd common-lib && \
-    poetry build
+    uv build --sdist
 
 FROM public.ecr.aws/lambda/python:3.12.2026.05.28.13
 

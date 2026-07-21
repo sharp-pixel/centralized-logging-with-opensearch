@@ -88,6 +88,6 @@ export class AuthStack extends Construct {
 
     this.userPoolId = userPool.userPoolId;
     this.userPoolClientId = userPoolClient.userPoolClientId;
-    this.userPoolDomain = userPoolDomain.cloudFrontDomainName;
+    this.userPoolDomain = userPoolDomain.cloudFrontEndpoint;
   }
 }

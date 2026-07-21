@@ -63,7 +63,7 @@ export class SolutionMetrics extends Construct {
     });
 
     const metricsFunction = new lambda.Function(this, 'MetricsHelper', {
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.handler',
       description:
         'This function generates UUID for each deployment and sends anonymous data to the AWS Solutions team',

@@ -31,7 +31,7 @@ export class InitLambdaLayerStack extends Construct {
         removalPolicy: RemovalPolicy.DESTROY,
         code: lambda.AssetCode.fromAsset(path.join(__dirname, './layer'), {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               '/bin/bash',
@@ -40,7 +40,7 @@ export class InitLambdaLayerStack extends Construct {
             ],
           },
         }),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       }
     );
 
@@ -56,7 +56,7 @@ export class InitLambdaLayerStack extends Construct {
         removalPolicy: RemovalPolicy.DESTROY,
         code: lambda.AssetCode.fromAsset(path.join(__dirname, './layer'), {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               '/bin/bash',
@@ -65,7 +65,7 @@ export class InitLambdaLayerStack extends Construct {
             ],
           },
         }),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       }
     );
 
@@ -82,7 +82,7 @@ export class InitLambdaLayerStack extends Construct {
         removalPolicy: RemovalPolicy.DESTROY,
         code: lambda.AssetCode.fromAsset(path.join(__dirname, './layer'), {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               '/bin/bash',
@@ -91,7 +91,7 @@ export class InitLambdaLayerStack extends Construct {
             ],
           },
         }),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       }
     );
 
@@ -127,7 +127,7 @@ export class InitLambdaLayerStack extends Construct {
         removalPolicy: RemovalPolicy.DESTROY,
         code: lambda.AssetCode.fromAsset(path.join(__dirname, './layer'), {
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               '/bin/bash',
@@ -136,7 +136,7 @@ export class InitLambdaLayerStack extends Construct {
             ],
           },
         }),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       }
     );
 

@@ -113,7 +113,7 @@ export class InitLambdaETLHelperStack extends Construct {
         path.join(__dirname, '../../../../../lambda/microbatch/etl_helper'),
         { followSymlinks: SymlinkFollowMode.ALWAYS }
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.minutes(5),
       memorySize: 128,

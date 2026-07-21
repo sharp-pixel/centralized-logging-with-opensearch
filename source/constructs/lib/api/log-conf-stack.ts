@@ -33,7 +33,7 @@ export class LogConfStack extends Construct {
       code: lambda.AssetCode.fromAsset(
         path.join(__dirname, '../../lambda/api/log_conf')
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       layers: [SharedPythonLayer.getInstance(this)],
       timeout: Duration.seconds(60),

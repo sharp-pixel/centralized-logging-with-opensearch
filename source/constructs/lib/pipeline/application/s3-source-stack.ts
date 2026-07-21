@@ -433,9 +433,11 @@ class SqsAllowS3ToPutEvent extends Construct {
             '../../../lambda/pipeline/common/custom-resource'
           )
         ),
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         timeout: Duration.seconds(60),
-        logRetention: logs.RetentionDays.ONE_MONTH,
+        logGroup: new logs.LogGroup(this, 'sqs-allow-s3-event-log-group', {
+          retention: logs.RetentionDays.ONE_MONTH,
+        }),
         handler: 'sqs_allow_s3_to_put_event.on_event',
         layers: [SharedPythonLayer.getInstance(this)],
         initialPolicy: [

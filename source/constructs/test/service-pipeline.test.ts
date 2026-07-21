@@ -31,12 +31,12 @@ describe('Service Log Stack', () => {
         },
       },
       MemorySize: 1024,
-      Runtime: 'python3.11',
+      Runtime: 'python3.12',
       Timeout: 900,
     });
 
     template.hasResourceProperties('AWS::Lambda::LayerVersion', {
-      CompatibleRuntimes: ['python3.11'],
+      CompatibleRuntimes: ['python3.12'],
     });
   });
 
@@ -80,7 +80,7 @@ describe('Service Log Stack', () => {
         },
       },
       MemorySize: 128,
-      Runtime: 'python3.11',
+      Runtime: 'python3.12',
       Timeout: 60,
     });
   });

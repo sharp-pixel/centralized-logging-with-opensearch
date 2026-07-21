@@ -39,7 +39,7 @@ export class CloudWatchAlarmManagerSingleton extends Construct {
       'ThrottleLambda',
       {
         uuid: 'ThrottleLambda',
-        runtime: lambda.Runtime.PYTHON_3_11, // Choose the Python runtime
+        runtime: lambda.Runtime.PYTHON_3_12, // Choose the Python runtime
         handler: 'index.handler',
         memorySize: 128,
         environment: {
@@ -61,7 +61,7 @@ export class CloudWatchAlarmManagerSingleton extends Construct {
         code: lambda.AssetCode.fromAsset(
           path.join(__dirname, '../../lambda/api/alarm')
         ),
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'lambda_function.lambda_handler',
         timeout: Duration.seconds(60),
         memorySize: 512,

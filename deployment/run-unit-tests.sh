@@ -13,13 +13,9 @@
 [ "$DEBUG" == 'true' ] && set -x
 set -e
 
-# Check if poetry is available in the shell
-if command -v poetry >/dev/null 2>&1; then
-    export POETRY_COMMAND="poetry"
-elif [ -n "$POETRY_HOME" ] && [ -x "$POETRY_HOME/bin/poetry" ]; then
-    export POETRY_COMMAND="$POETRY_HOME/bin/poetry"
-else
-    echo "Poetry is not available. Aborting script." >&2
+# Check if uv is available in the shell
+if ! command -v uv >/dev/null 2>&1; then
+    echo "uv is not available. Aborting script." >&2
     exit 1
 fi
 
@@ -72,16 +68,8 @@ run_python_test() {
 	echo "------------------------------------------------------------------------------"
 	cd $component_path
 
-	echo "Initiating virtual environment"
-
-	"$POETRY_COMMAND" install
-	source $("$POETRY_COMMAND" env info --path)/bin/activate
-
-    echo "Installing python packages"
-    # install test dependencies in the python virtual environment
-	t pip install --upgrade pip
-	t pip install --upgrade pytest-xdist
-	t pip3 install -e $source_dir/constructs/lambda/common-lib
+	echo "Synchronizing Python dependencies"
+	uv sync --locked --all-groups --python 3.12
 
 	# setup coverage report path
 	mkdir -p $source_dir/tests/coverage-reports
@@ -89,16 +77,13 @@ run_python_test() {
 	echo "coverage report path set to $coverage_report_path"
 
 	# Use -vv for debugging
-	python3 -m pytest --cov --cov-report=term-missing --cov-report "xml:$coverage_report_path"
+	uv run --frozen --no-sync python -m pytest --cov --cov-report=term-missing --cov-report "xml:$coverage_report_path"
 
     # The pytest --cov with its parameters and .coveragerc generates a xml cov-report with `coverage/sources` list
     # with absolute path for the source directories. To avoid dependencies of tools (such as SonarQube) on different
     # absolute paths for source directories, this substitution is used to convert each absolute source directory
     # path to the corresponding project relative path. The $source_dir holds the absolute path for source directory.
     sed -i -e "s,<source>$source_dir,<source>source,g" $coverage_report_path
-
-	echo "deactivate virtual environment"
-	deactivate
 
 	if [ "${CLEAN:-true}" = "true" ]; then
 		rm .coverage
@@ -116,13 +101,7 @@ run_python_test_concurrently() {
 	echo "------------------------------------------------------------------------------"
 	cd $component_path
 
-	"$POETRY_COMMAND" install
-	source $("$POETRY_COMMAND" env info --path)/bin/activate
-
-    echo "Installing python packages"
-    # install test dependencies in the python virtual environment
-	t pip install --upgrade pip 
-	t pip install --upgrade pytest-xdist
+	uv sync --locked --all-groups --python 3.12
 
 	# setup coverage report path
 	mkdir -p $source_dir/tests/coverage-reports
@@ -130,16 +109,13 @@ run_python_test_concurrently() {
 	echo "coverage report path set to $coverage_report_path"
 
 	# Use -vv for debugging
-	python3 -m pytest -n 8 --cov --cov-report=term-missing --cov-report "xml:$coverage_report_path"
+	uv run --frozen --no-sync python -m pytest -n 8 --cov --cov-report=term-missing --cov-report "xml:$coverage_report_path"
 
     # The pytest --cov with its parameters and .coveragerc generates a xml cov-report with `coverage/sources` list
     # with absolute path for the source directories. To avoid dependencies of tools (such as SonarQube) on different
     # absolute paths for source directories, this substitution is used to convert each absolute source directory
     # path to the corresponding project relative path. The $source_dir holds the absolute path for source directory.
     sed -i -e "s,<source>$source_dir,<source>source,g" $coverage_report_path
-
-	echo "deactivate virtual environment"
-	deactivate
 
 	if [ "${CLEAN:-true}" = "true" ]; then
 		rm .coverage
@@ -175,7 +151,7 @@ run_javascript_test() {
     cd $component_path
 
 	# install and build for unit testing
-	npm install
+	npm ci
 
     # run unit tests
     npm run test
@@ -194,7 +170,7 @@ run_cdk_project_test() {
     cd $component_path
 
 	# install and build for unit testing
-	npm install
+	npm ci
 
 	## Option to suppress the Override Warning messages while synthesizing using CDK
 	# export overrideWarningsEnabled=false
@@ -216,7 +192,7 @@ run_frontend_project_test() {
     cd $component_path
 
 	# install and build for unit testing
-	npm install --legacy-peer-deps
+	npm ci --legacy-peer-deps
 
 	# run unit tests
 	npm run test:coverage -- -u
@@ -233,10 +209,10 @@ echo $source_dir
 
 # Generate requirement.txt files
 cd $source_dir/constructs/lib/microbatch/main/services/lambda/layer
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-boto3.txt --without-hashes --only boto3
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-pyarrow.txt --without-hashes --only pyarrow
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-utils.txt --without-hashes --only utils
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-enrichment.txt --without-hashes --only enrichment
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group boto3 --output-file requirements-boto3.txt
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group pyarrow --output-file requirements-pyarrow.txt
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group utils --output-file requirements-utils.txt
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group enrichment --output-file requirements-enrichment.txt
 
 lambda_paths=(
 	"common-lib"
@@ -252,7 +228,7 @@ base_lambda_dir="$source_dir/constructs/lambda"
 for path in "${lambda_paths[@]}"; do
     full_path="$base_lambda_dir/$path"
     cd "$full_path"
-    "$POETRY_COMMAND" export --format requirements.txt --output requirements.txt --without-hashes --without dev
+    uv export --locked --python 3.12 --no-dev --no-hashes --no-emit-project --output-file requirements.txt
 done
 
 
@@ -275,7 +251,7 @@ coverage_reports_top_path=$source_dir/test/coverage-reports
 
 portal_dir=$source_dir/portal
 cd $portal_dir
-t npm install --legacy-peer-deps
+t npm ci --legacy-peer-deps
 t npm run build
 
 construct_dir=$source_dir/constructs

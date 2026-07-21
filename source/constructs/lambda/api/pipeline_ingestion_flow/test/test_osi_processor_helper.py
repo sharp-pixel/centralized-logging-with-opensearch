@@ -113,7 +113,7 @@ def remote_lambda(iam_roles):
 
         yield awslambda.create_function(
             FunctionName="CL-logProcessorFn-ef8PiCbL9ixp",
-            Runtime="python3.11",
+            Runtime="python3.12",
             Role=iam_roles["LambdaRole"]["Arn"],
             Handler="lambda_function.lambda_handler",
             Code={"ZipFile": get_test_zip_file1()},

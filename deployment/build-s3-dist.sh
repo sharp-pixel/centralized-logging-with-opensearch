@@ -73,12 +73,8 @@ do_cmd()
     fi
 }
 
-if command -v poetry >/dev/null 2>&1; then
-    export POETRY_COMMAND="poetry"
-elif [ -n "$POETRY_HOME" ] && [ -x "$POETRY_HOME/bin/poetry" ]; then
-    export POETRY_COMMAND="$POETRY_HOME/bin/poetry"
-else
-    echo "Poetry is not available. Aborting script." >&2
+if ! command -v uv >/dev/null 2>&1; then
+    echo "uv is not available. Aborting script." >&2
     exit 1
 fi
 
@@ -282,7 +278,7 @@ echo "--------------------------------------------------------------------------
 # Note: do not install using global (-g) option. This makes build-s3-dist.sh difficult
 # for customers and developers to use, as it globally changes their environment.
 do_cmd cd $source_dir/constructs
-t do_cmd npm install
+t do_cmd npm ci
 
 # Add local install to PATH
 export PATH=$(npm bin):$PATH
@@ -297,10 +293,10 @@ echo "[Install] Install dependencies for Lambda functions & layers"
 echo "------------------------------------------------------------------------------"
 
 do_cmd cd $source_dir/constructs/lib/microbatch/main/services/lambda/layer
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-boto3.txt --without-hashes --only boto3
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-pyarrow.txt --without-hashes --only pyarrow
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-utils.txt --without-hashes --only utils
-"$POETRY_COMMAND" export --format requirements.txt --output requirements-enrichment.txt --without-hashes --only enrichment
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group boto3 --output-file requirements-boto3.txt
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group pyarrow --output-file requirements-pyarrow.txt
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group utils --output-file requirements-utils.txt
+uv export --locked --python 3.12 --no-hashes --no-emit-project --only-group enrichment --output-file requirements-enrichment.txt
 
 lambda_paths=(
     "common-lib"
@@ -316,7 +312,7 @@ base_lambda_dir="$source_dir/constructs/lambda"
 for path in "${lambda_paths[@]}"; do
     full_path="$base_lambda_dir/$path"
     do_cmd cd "$full_path"
-    "$POETRY_COMMAND" export --format requirements.txt --output requirements.txt --without-hashes --without dev
+    uv export --locked --python 3.12 --no-dev --no-hashes --no-emit-project --output-file requirements.txt
 done
 
 

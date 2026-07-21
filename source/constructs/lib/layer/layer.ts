@@ -31,7 +31,7 @@ export class SharedPythonLayer extends lambda.LayerVersion {
             '.coverage*',
           ],
           bundling: {
-            image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+            image: lambda.Runtime.PYTHON_3_12.bundlingImage,
             platform: 'linux/amd64',
             command: [
               '/bin/bash',
@@ -44,7 +44,7 @@ export class SharedPythonLayer extends lambda.LayerVersion {
           },
         }
       ),
-      compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       compatibleArchitectures: [lambda.Architecture.X86_64],
       description: `${Aws.STACK_NAME} - Shared python layer`,
     });

@@ -9,6 +9,27 @@ import * as s3source from '../lib/pipeline/application/s3-source-stack';
 import * as syslog from '../lib/pipeline/application/syslog-to-ecs-stack';
 
 describe('Application Log Stack', () => {
+  const publicEcrRegistry = process.env.PUBLIC_ECR_REGISTRY;
+  const publicEcrTag = process.env.PUBLIC_ECR_TAG;
+
+  beforeAll(() => {
+    process.env.PUBLIC_ECR_REGISTRY = 'public.ecr.aws/aws-solutions';
+    process.env.PUBLIC_ECR_TAG = 'latest';
+  });
+
+  afterAll(() => {
+    if (publicEcrRegistry === undefined) {
+      delete process.env.PUBLIC_ECR_REGISTRY;
+    } else {
+      process.env.PUBLIC_ECR_REGISTRY = publicEcrRegistry;
+    }
+    if (publicEcrTag === undefined) {
+      delete process.env.PUBLIC_ECR_TAG;
+    } else {
+      process.env.PUBLIC_ECR_TAG = publicEcrTag;
+    }
+  });
+
   test('Test kds stack with auto-scaling', () => {
     const app = new App();
     // WHEN

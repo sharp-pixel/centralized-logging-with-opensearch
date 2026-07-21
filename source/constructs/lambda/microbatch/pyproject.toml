@@ -1,43 +1,57 @@
 [project]
 name = "microbatch-test"
+version = "0.0.1"
 description = ""
 requires-python = ">=3.10,<4.0.0"
-dependencies = [
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "boto3>=1.36.1,<2",
+    "botocore>=1.36.1,<2",
+    "s3transfer>=0.11.1,<0.12",
+    "moto~=4.2.13",
+    "pyparsing>=3.2.1,<4",
+    "pytest>=9.0.3,<10",
+    "pytest-cov>=6.0.0,<7",
+    "pytest-xdist>=3.6.1,<4",
+    "pyyaml>=6.0.2,<7",
+    "docker>=7.1.0,<8",
+    "openapi-spec-validator>=0.7.1,<0.8",
+    "numpy>=2.2.1,<2.3",
+    "pyarrow>=23.0.1,<24",
+    "pytest-httpserver>=1.1.0,<2",
+    "binaryornot>=0.4.4,<0.5",
+    "certifi>=2024.12.14,<2025",
+    "chardet>=5.2.0,<6",
+    "charset-normalizer>=3.4.1,<4",
+    "idna>=3.10,<4",
+    "prettytable>=3.12.0,<4",
+    "requests>=2.33.0,<3",
+    "urllib3>=2.5.0,<3",
+    "wcwidth>=0.2.13,<0.3",
+    "maxminddb>=2.6.3,<3",
+    "user-agents>=2.2.0,<3",
+    "cachetools>=5.5.0,<6",
+    "commonlib",
+    "cryptography>=46.0.7",
 ]
 
-[tool.poetry]
-package-mode = false
+[tool.uv]
+package = false
+default-groups = "all"
+
+[tool.uv.sources]
+commonlib = { path = "../common-lib" }
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.group.dev.dependencies]
-boto3 = "^1.36.1"
-botocore = "^1.36.1"
-s3transfer = "^0.11.1"
-moto = "~4.2.13"
-pyparsing = "^3.2.1"
-pytest = "^9.0.3"
-pytest-cov = "^6.0.0"
-pytest-xdist = "^3.6.1"
-pyyaml = "^6.0.2"
-docker = "^7.1.0"
-openapi-spec-validator = "^0.7.1"
-numpy = "^2.2.1"
-pyarrow = "^19.0.0"
-pytest-httpserver = "^1.1.0"
-binaryornot = "^0.4.4"
-certifi = "^2024.12.14"
-chardet = "^5.2.0"
-charset-normalizer = "^3.4.1"
-idna = "^3.10"
-prettytable = "^3.12.0"
-requests = "^2.33.0"
-urllib3 = "^2.5.0"
-wcwidth = "^0.2.13"
-maxminddb = "^2.6.3"
-user-agents = "^2.2.0"
-cachetools = "^5.5.0"
-commonlib = { path = "../common-lib" }
-cryptography = ">=46.0.7"
+requires = ["uv_build>=0.11.30,<0.12.0"]
+build-backend = "uv_build"

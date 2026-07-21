@@ -278,7 +278,7 @@ export class AppLogIngestionStack extends Construct {
           path.join(__dirname, '../../lambda/api/app_log_ingestion'),
           {
             bundling: {
-              image: lambda.Runtime.PYTHON_3_11.bundlingImage,
+              image: lambda.Runtime.PYTHON_3_12.bundlingImage,
               platform: 'linux/amd64',
               command: [
                 'bash',
@@ -288,7 +288,7 @@ export class AppLogIngestionStack extends Construct {
             },
           }
         ),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_11],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
         //compatibleArchitectures: [lambda.Architecture.X86_64, lambda.Architecture.ARM_64],
         description: 'Default Lambda layer for AppLog Ingestion',
       }
@@ -302,7 +302,7 @@ export class AppLogIngestionStack extends Construct {
           path.join(__dirname, '../../lambda/api/app_log_ingestion')
         ),
         layers: [SharedPythonLayer.getInstance(this), appLogIngestionLayer],
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'ingestion_modification_event_lambda_function.lambda_handler',
         timeout: Duration.minutes(15),
         memorySize: 1024,
@@ -551,7 +551,7 @@ export class AppLogIngestionStack extends Construct {
           path.join(__dirname, '../../lambda/api/app_log_ingestion')
         ),
         layers: [SharedPythonLayer.getInstance(this), appLogIngestionLayer],
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'lambda_function.lambda_handler',
         timeout: Duration.seconds(120),
         memorySize: 1024,
@@ -756,7 +756,7 @@ export class AppLogIngestionStack extends Construct {
           path.join(__dirname, '../../lambda/api/app_log_ingestion')
         ),
         layers: [SharedPythonLayer.getInstance(this), appLogIngestionLayer],
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler:
           'ec2_ingestion_distribution_event_lambda_function.lambda_handler',
         timeout: Duration.minutes(15),
@@ -826,7 +826,7 @@ export class AppLogIngestionStack extends Construct {
           path.join(__dirname, '../../lambda/api/app_log_ingestion')
         ),
         layers: [SharedPythonLayer.getInstance(this)],
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'auto_scaling_group_config_lambda_function.lambda_handler',
         timeout: Duration.seconds(60),
         memorySize: 1024,

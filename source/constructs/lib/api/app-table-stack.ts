@@ -37,7 +37,7 @@ export class AppTableStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     const cfnLogConfTable = this.logConfTable.node.defaultChild as ddb.CfnTable;
@@ -57,7 +57,7 @@ export class AppTableStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
       stream: ddb.StreamViewType.NEW_IMAGE,
     });
 
@@ -81,7 +81,7 @@ export class AppTableStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
     const cfnLogSourceTable = this.logSourceTable.node
       .defaultChild as ddb.CfnTable;
@@ -97,7 +97,7 @@ export class AppTableStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     const cfnAppPipelineTable = this.appPipelineTable.node
@@ -114,7 +114,7 @@ export class AppTableStack extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
       encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: props.encryptionKey,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     this.appLogIngestionTable.addGlobalSecondaryIndex({
@@ -140,7 +140,7 @@ export class AppTableStack extends Construct {
         removalPolicy: RemovalPolicy.DESTROY,
         encryption: ddb.TableEncryption.CUSTOMER_MANAGED,
         encryptionKey: props.encryptionKey,
-        pointInTimeRecovery: true,
+        pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
       }
     );
 

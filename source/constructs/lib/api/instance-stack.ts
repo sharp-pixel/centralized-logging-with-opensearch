@@ -350,13 +350,13 @@ export class InstanceStack extends Construct {
           path.join(__dirname, '../../lambda/api/log_agent_status')
         ),
         layers: [SharedPythonLayer.getInstance(this)],
-        runtime: lambda.Runtime.PYTHON_3_11,
+        runtime: lambda.Runtime.PYTHON_3_12,
         handler: 'lambda_function.lambda_handler',
         timeout: Duration.minutes(5),
         memorySize: 2048,
-        logFormat: 'JSON',
-        applicationLogLevel: 'INFO',
-        systemLogLevel: 'WARN',
+        loggingFormat: lambda.LoggingFormat.JSON,
+        applicationLogLevelV2: lambda.ApplicationLogLevel.INFO,
+        systemLogLevelV2: lambda.SystemLogLevel.WARN,
         environment: {
           SUB_ACCOUNT_LINK_TABLE_NAME: props.subAccountLinkTable.tableName,
           SOLUTION_VERSION: process.env.VERSION || 'v1.0.0',

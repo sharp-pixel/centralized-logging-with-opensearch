@@ -147,7 +147,7 @@ export class InitLambdaSendTemplateEmailStack extends Construct {
         path.join(__dirname, '../../../../../lambda/microbatch/send_email'),
         { followSymlinks: SymlinkFollowMode.ALWAYS }
       ),
-      runtime: lambda.Runtime.PYTHON_3_11,
+      runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'lambda_function.lambda_handler',
       timeout: Duration.minutes(1),
       memorySize: 128,

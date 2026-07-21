@@ -27,7 +27,7 @@ export class EcsClusterStack extends Construct {
 
     this.ecsCluster = new ecs.Cluster(this, `${stackPrefix}Cluster`, {
       vpc: props.vpc,
-      containerInsights: true,
+      containerInsightsV2: ecs.ContainerInsights.ENABLED,
     });
   }
 }

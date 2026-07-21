@@ -1,24 +1,39 @@
 [project]
 name = "log-agent-status"
+version = "0.0.1"
 description = "Instance Agent Status Query Resolver lambda"
 requires-python = ">=3.10"
-dependencies = [
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "moto~=4.2.13",
+    "pytest>=9.0.3,<10",
+    "pytest-cov>=6.0.0,<7",
+    "pyyaml>=6.0.2,<7",
+    "docker>=7.1.0,<8",
+    "boto3>=1.36.1,<2",
+    "pytest-mock>=3.14.0,<4",
+    "cryptography>=46.0.7",
+    "commonlib",
 ]
 
-[tool.poetry]
-package-mode = false
+[tool.uv]
+package = false
+default-groups = "all"
+
+[tool.uv.sources]
+commonlib = { path = "../../common-lib", editable = true }
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.group.dev.dependencies]
-moto = "~4.2.13"
-pytest = "^9.0.3"
-pytest-cov = "^6.0.0"
-pyyaml = "^6.0.2"
-docker = "^7.1.0"
-boto3 = "^1.36.1"
-pytest-mock = "^3.14.0"
-cryptography = ">=46.0.7"
+requires = ["uv_build>=0.11.30,<0.12.0"]
+build-backend = "uv_build"
 
