@@ -4,7 +4,7 @@
 import logging
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from commonlib import AWSConnection, handle_error, AppSyncRouter
 from commonlib.model import DomainStatusCheckType, GrafanaStatusCheckItem
 from commonlib.exception import ErrorCode
@@ -43,7 +43,7 @@ def create_grafana(**args):
         "url": args["url"],
         "token": args["token"],
         "tags": args.get("tags", []),
-        "createdAt": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "createdAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
     ddb_util.put_item(item)
     put_grafana_token(grafana_id, args["token"])

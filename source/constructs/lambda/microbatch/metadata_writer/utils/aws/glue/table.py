@@ -154,7 +154,9 @@ class TableMetaData:
         if self.schema.get("expression", {}).get("where"):
             where_clause = f"WHERE {self.schema['expression']['where']}"
 
-        return f"""INSERT INTO "{{destination_database}}"."{{destination_table}}" ({destination_cols}) SELECT {select_expression} FROM "{{source_database}}"."{{source_table}}" {where_clause};"""
+        # Schema expressions are a trusted ETL DSL; custom raw statements are
+        # intentionally supported by the branches above.
+        return f"""INSERT INTO "{{destination_database}}"."{{destination_table}}" ({destination_cols}) SELECT {select_expression} FROM "{{source_database}}"."{{source_table}}" {where_clause};"""  # nosec B608
 
     def _generate_aggregate_statement(self) -> str:
         if self.schema.get("statements", {}).get("aggregate"):
@@ -179,7 +181,9 @@ class TableMetaData:
         where_clause = "WHERE __execution_name__ = '{execution_name}'"
         if self.schema.get("expression", {}).get("where"):
             where_clause = f"{where_clause} AND {self.schema['expression']['where']}"
-        return f"""INSERT INTO "{{destination_database}}"."{{destination_table}}" ({destination_cols}) SELECT {select_expression} FROM "{{source_database}}"."{{source_table}}" {where_clause} GROUP BY {group_by};"""
+        # Schema expressions are a trusted ETL DSL; custom raw statements are
+        # intentionally supported by the branches above.
+        return f"""INSERT INTO "{{destination_database}}"."{{destination_table}}" ({destination_cols}) SELECT {select_expression} FROM "{{source_database}}"."{{source_table}}" {where_clause} GROUP BY {group_by};"""  # nosec B608
 
     def _generate_drop_statement(self) -> str:
         if self.schema.get("statements", {}).get("drop"):

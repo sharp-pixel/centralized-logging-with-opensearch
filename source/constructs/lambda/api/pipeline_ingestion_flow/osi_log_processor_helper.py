@@ -3,7 +3,7 @@
 import os
 import json
 from commonlib.logging import get_logger
-from datetime import datetime
+from datetime import datetime, timezone
 from commonlib.dao import (
     AppPipelineDao,
     StatusEnum,
@@ -52,7 +52,7 @@ def lambda_handler(event, _):
             },
             ExpressionAttributeValues={
                 status: "CREATING",
-                ":uDt": datetime.utcnow().strftime(data_format),
+                ":uDt": datetime.now(timezone.utc).strftime(data_format),
             },
         )
     else:

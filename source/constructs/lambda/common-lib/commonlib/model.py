@@ -4,7 +4,7 @@
 import uuid
 from enum import Enum
 from typing import List, Optional, Union
-from datetime import datetime
+from datetime import datetime, timezone
 from pydantic import (
     BaseModel,
     Field,
@@ -17,7 +17,11 @@ DEFAULT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
 
 def now_iso8601():
-    return datetime.utcnow().strftime(DEFAULT_TIME_FORMAT)
+    return datetime.now(timezone.utc).strftime(DEFAULT_TIME_FORMAT)
+
+
+def utc_now():
+    return datetime.now(timezone.utc)
 
 
 class CommonEnum(str, Enum):
@@ -232,8 +236,8 @@ class Parameter(BaseModel):
 class CommonModel(BaseModel):
     tags: Optional[List[Tag]] = []
     status: StatusEnum = StatusEnum.CREATING
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=utc_now)
+    updatedAt: datetime = Field(default_factory=utc_now)
 
     # https://github.com/pydantic/pydantic/issues/1409
     def dict(self, exclude_none=True, **kwargs):

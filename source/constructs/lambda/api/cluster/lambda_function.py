@@ -358,7 +358,7 @@ def import_domain(**args):
             importMethod=import_method,
             status=DomainImportStatusEnum.IMPORTED,
             tags=args.get("tags", []),
-            importedDt=datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+            importedDt=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         )
     )
 

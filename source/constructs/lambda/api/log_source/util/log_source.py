@@ -6,7 +6,7 @@ from commonlib.logging import get_logger
 import os
 import sys
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 from boto3.dynamodb.conditions import Attr
 
@@ -69,8 +69,8 @@ class LogSource:
 
         source_id = str(uuid.uuid4())
         args[self._pk] = source_id
-        args["createdAt"] = datetime.utcnow().strftime(data_format)
-        args["updatedAt"] = datetime.utcnow().strftime(data_format)
+        args["createdAt"] = datetime.now(timezone.utc).strftime(data_format)
+        args["updatedAt"] = datetime.now(timezone.utc).strftime(data_format)
         args["status"] = "ACTIVE"
         if not args.get("accountId"):
             args["accountId"] = account_helper.default_account_id
@@ -105,7 +105,7 @@ class LogSource:
         item = self._ddb_util.get_item(key={self._pk: source_id})
 
         item["status"] = StatusEnum.INACTIVE
-        item["updatedAt"] = datetime.utcnow().strftime(data_format)
+        item["updatedAt"] = datetime.now(timezone.utc).strftime(data_format)
 
         # Update item
         self._ddb_util.put_item(item)
@@ -173,7 +173,7 @@ class EC2LogSource(LogSource):
             instance["id"] = instance["instanceId"]
             instance["sourceId"] = source_id
             instance["platformType"] = group_platform
-            instance["createdAt"] = datetime.utcnow().strftime(data_format)
+            instance["createdAt"] = datetime.now(timezone.utc).strftime(data_format)
             instance["updatedAt"] = instance["createdAt"]
             del instance["instanceId"]
             new_add_instances.append(instance)

@@ -5,7 +5,7 @@ import json
 from commonlib.logging import get_logger
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from boto3.dynamodb.conditions import Attr
 
 from commonlib import AWSConnection, handle_error, AppSyncRouter
@@ -392,7 +392,7 @@ def create_service_pipeline(**args):  # NOSONAR
         "destinationType": destination_type,
         "parameters": args["parameters"],
         "tags": args.get("tags", []),
-        "createdAt": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "createdAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "stackName": stack_name,
         "monitor": monitor,
         "osiParams": osi_params,

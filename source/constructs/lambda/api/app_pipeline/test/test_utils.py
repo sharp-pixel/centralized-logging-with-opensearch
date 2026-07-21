@@ -583,7 +583,7 @@ def test_make_index_template():
                 "body_bytes_sent": {"type": "long"},
             },
         },
-        regex='(?<remote_addr>\S+)\s+-\s+(?<remote_user>\S+)\s+\[(?<time_local>\d+/\S+/\d+:\d+:\d+:\d+\s+\S+)\]\s+"(?<request_method>\S+)\s+(?<request_uri>\S+)\s+\S+"\s+(?<status>\S+)\s+(?<body_bytes_sent>\S+).*',
+        regex=r'(?<remote_addr>\S+)\s+-\s+(?<remote_user>\S+)\s+\[(?<time_local>\d+/\S+/\d+:\d+:\d+:\d+\s+\S+)\]\s+"(?<request_method>\S+)\s+(?<request_uri>\S+)\s+\S+"\s+(?<status>\S+)\s+(?<body_bytes_sent>\S+).*',
         regexFieldSpecs=[
             RegularSpec(key="remote_addr", type="ip"),
             RegularSpec(key="remote_user", type="text"),

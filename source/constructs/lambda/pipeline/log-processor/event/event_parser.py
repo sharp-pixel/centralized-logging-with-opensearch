@@ -356,7 +356,7 @@ class SQS(EventType):
         )
 
     def process_event(self, event):
-        """
+        r"""
         config = {
             "parser": "regex",
             "regex": "(?P<remote_addr>\S+)\s+-\s+(?P<remote_user>\S+)\s+\[(?P<time_local>\d+/\S+/\d+:\d+:\d+:\d+\s+\S+)\]\s+\"(?P<request_method>\S+)\s+(?P<request_uri>\S+)\s+\S+\"\s+(?P<status>\S+)\s+(?P<body_bytes_sent>\S+)",

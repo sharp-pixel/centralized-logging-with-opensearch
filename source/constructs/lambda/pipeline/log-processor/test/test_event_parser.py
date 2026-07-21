@@ -11,7 +11,7 @@ import os
 
 os.environ['CONFIG_JSON'] = json.dumps({
     "parser": "regex",
-    "regex": "(?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)\s+(?<level>\w+)\s+(?<message>.+)",
+    "regex": r"(?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)\s+(?<level>\w+)\s+(?<message>.+)",
     "time_key": "",
     "time_format": "",
     "time_offset": "",

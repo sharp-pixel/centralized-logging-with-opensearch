@@ -116,7 +116,13 @@ def ssm_req_client(api: str, payload: dict, sts_role_arn=None):
         "Content-Type": "application/x-amz-json-1.1",
     }
     # Make HTTP POST request with AWS authentication and headers
-    return requests.post(api_endpoint, auth=aws_auth, json=payload, headers=headers)
+    return requests.post(
+        api_endpoint,
+        auth=aws_auth,
+        json=payload,
+        headers=headers,
+        timeout=30,
+    )
 
 
 def send_status_check_command(

@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import os
-import uuid
 import gzip
 import json
 import boto3
+import tempfile
 import types
 import shutil
 import logging
@@ -346,7 +346,7 @@ def delete_local_file(path: Path) -> None:
         os.remove(path.as_posix())
 
 
-def make_local_work_dir(path: Path = Path("/tmp")) -> Path:  # NOSONAR
+def make_local_work_dir(path: Path = Path("/tmp")) -> Path:  # nosec B108
     """Create a local working directory for the file merging operation, randomly generate a unique directory
         through uuid, create a download directory in it to download the original files that need to be merged,
         and create an output directory to store the merged files.
@@ -355,8 +355,8 @@ def make_local_work_dir(path: Path = Path("/tmp")) -> Path:  # NOSONAR
     :return: return a unique working directory, e.g. /tmp/{uuid}.
     """
 
-    local_work_path = path / str(uuid.uuid4())
-    local_work_path.mkdir(parents=True, exist_ok=True)
+    path.mkdir(parents=True, exist_ok=True)
+    local_work_path = Path(tempfile.mkdtemp(dir=path))
     local_download_dir = local_work_path / "download"
     local_download_dir.mkdir(parents=True, exist_ok=True)
     local_output_path = local_work_path / "output"

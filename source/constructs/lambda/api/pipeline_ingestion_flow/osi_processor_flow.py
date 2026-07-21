@@ -3,7 +3,7 @@
 import os
 import json
 from commonlib.logging import get_logger
-from datetime import datetime
+from datetime import datetime, timezone
 from abc import ABC, abstractmethod
 from commonlib.dao import (
     AppPipelineDao,
@@ -277,7 +277,7 @@ def create_osi_pipeline():
             },
             ExpressionAttributeValues={
                 status: "CREATING",
-                ":uDt": datetime.utcnow().strftime(data_format),
+                ":uDt": datetime.now(timezone.utc).strftime(data_format),
             },
         )
     else:
@@ -330,7 +330,7 @@ def update_osi_pipeline_status(result):
                 },
                 ExpressionAttributeValues={
                     status: "ACTIVE",
-                    ":uDt": datetime.utcnow().strftime(data_format),
+                    ":uDt": datetime.now(timezone.utc).strftime(data_format),
                 },
             )
         else:

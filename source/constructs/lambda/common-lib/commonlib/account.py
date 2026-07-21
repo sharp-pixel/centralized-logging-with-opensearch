@@ -5,7 +5,7 @@
 import os
 import json
 from string import Template
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Union
 
 from .aws import DynamoDBUtil, AWSConnection
@@ -125,7 +125,9 @@ class LinkAccountHelper:
         account["windowsAgentConfDoc"] = windows_agent_conf_doc
         account["agentStatusCheckDoc"] = agent_status_check_doc
         account["agentInstallDoc"] = agent_install_doc
-        account["updatedAt"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        account["updatedAt"] = datetime.now(timezone.utc).strftime(
+            "%Y-%m-%dT%H:%M:%SZ"
+        )
         self.events_client.put_permission(
             EventBusName="default",
             Action="events:PutEvents",
@@ -176,7 +178,9 @@ class LinkAccountHelper:
         item[self._sk] = region or self._default_region
         item["cwlMonitorRoleArn"] = self._cwl_role_arn
         item["status"] = "ACTIVE"
-        item["createdAt"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        item["createdAt"] = datetime.now(timezone.utc).strftime(
+            "%Y-%m-%dT%H:%M:%SZ"
+        )
 
         self._ddb_util.put_item(item)
         return "OK"

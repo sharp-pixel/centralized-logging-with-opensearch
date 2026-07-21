@@ -6,6 +6,7 @@ import json
 import random
 import logging
 import urllib.request
+from urllib.parse import urlparse
 import time
 from functools import partial, wraps
 
@@ -212,10 +213,14 @@ def submit_response(event: dict, context, response_status: str, error_message: s
     ).encode("utf-8")
     headers = {"content-type": "", "content-length": str(len(response_body))}
     try:
+        response_url = event["ResponseURL"]
+        if urlparse(response_url).scheme != "https":
+            raise ValueError("CloudFormation response URL must use HTTPS")
         req = urllib.request.Request(
-            url=event["ResponseURL"], headers=headers, data=response_body, method="PUT"
+            url=response_url, headers=headers, data=response_body, method="PUT"
         )
-        with urllib.request.urlopen(req) as response:
+        # ResponseURL is supplied by CloudFormation and constrained to HTTPS above.
+        with urllib.request.urlopen(req, timeout=10) as response:  # nosec B310
             print(response.read().decode("utf-8"))
         print("Status code: " + response.reason)
     except Exception as e:

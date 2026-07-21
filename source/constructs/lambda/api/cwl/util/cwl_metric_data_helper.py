@@ -7,7 +7,7 @@ import os
 import math
 import re
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from commonlib import AWSConnection
 from commonlib.dao import AppLogIngestionDao, AppPipelineDao, LogSourceDao
@@ -154,9 +154,9 @@ class MetricData:
         * Start time between 15 and 63 days ago - Use a multiple of 300 seconds (5 minutes).
         * Start time greater than 63 days ago - Use a multiple of 3600 seconds (1 hour).
         """
-        now = datetime.utcnow()
-        start = datetime.fromtimestamp(int(start_time))
-        end = datetime.fromtimestamp(int(end_time))
+        now = datetime.now(timezone.utc)
+        start = datetime.fromtimestamp(int(start_time), timezone.utc)
+        end = datetime.fromtimestamp(int(end_time), timezone.utc)
 
         total_seconds_from_now = (now - start).total_seconds()
         total_seconds_between_start_and_end = (end - start).total_seconds()

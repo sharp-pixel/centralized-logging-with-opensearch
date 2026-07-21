@@ -11,14 +11,19 @@ logger = getLogger(__name__)
 logger.setLevel(INFO)
 
 
-def send_metrics(metrics_data: dict, deployment_uuid: str = '') -> None:
+def send_metrics(metrics_data: dict, deployment_uuid: str = "") -> None:
     """Send anonymized metrics if enabled"""
     try:
-        if os.getenv('SEND_ANONYMIZED_USAGE_DATA', '').lower() == 'yes' and metrics_data is not None:
+        if (
+            os.getenv("SEND_ANONYMIZED_USAGE_DATA", "").lower() == "yes"
+            and metrics_data is not None
+        ):
             usage_data = {
                 "Solution": "SO8025",
-                "UUID": os.getenv('DEPLOYMENT_UUID', deployment_uuid),
-                "TimeStamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f"),
+                "UUID": os.getenv("DEPLOYMENT_UUID", deployment_uuid),
+                "TimeStamp": datetime.now(timezone.utc).strftime(
+                    "%Y-%m-%dT%H:%M:%S.%f"
+                ),
                 "Data": metrics_data,
                 "Version": os.getenv("SOLUTION_VERSION", ""),
             }
@@ -27,11 +32,12 @@ def send_metrics(metrics_data: dict, deployment_uuid: str = '') -> None:
     except Exception as excep:
         logger.error(excep)
 
+
 def invoke_metrics_api(payload) -> None:
     """Send metrics payload to the API endpoint"""
     url = "https://metrics.awssolutionsbuilder.com/generic"
 
-    request_data = quote(json.dumps(payload)).encode('utf-8')
+    request_data = quote(json.dumps(payload)).encode("utf-8")
     api_request = Request(
         url,
         method="POST",
@@ -39,9 +45,9 @@ def invoke_metrics_api(payload) -> None:
         headers={"Content-Type": "application/json"},
     )
     try:
-        with urlopen(api_request) as response:
-            response.read().decode('utf-8')  
+        # The destination is a fixed HTTPS endpoint owned by AWS Solutions.
+        with urlopen(api_request, timeout=10) as response:  # nosec B310
+            response.read().decode("utf-8")
             logger.debug(f"Metrics API response Status code: {response.status}")
     except Exception as e:
         logger.info(f"Error while sending metrics data: {str(e)}")
- 
