@@ -287,6 +287,20 @@ def test_delete_proxy_for_opensearch(sts_client, sfn_client, ddb_client):
     assert res == "OK"
 
 
+@pytest.mark.parametrize(
+    ("operation", "args"),
+    [
+        ("delete_sub_stack", ("domain-id", "Invalid")),
+        ("start_sub_stack", ("domain-id", {}, "Invalid")),
+    ],
+)
+def test_sub_stack_rejects_unknown_type(operation, args):
+    import lambda_function
+
+    with pytest.raises(ValueError, match="unknown type Invalid"):
+        getattr(lambda_function, operation)(*args)
+
+
 def test_create_proxy_for_opensearch(sts_client, sfn_client, ddb_client):
     input = {
         "customEndpoint": "sfsdf.com",

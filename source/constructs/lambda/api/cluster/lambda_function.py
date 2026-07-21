@@ -936,10 +936,8 @@ def delete_sub_stack(id: str, stack_type="Proxy"):
     Returns:
         str: 'OK' by default
     """
-    assert stack_type in [
-        "Proxy",
-        "Alarm",
-    ], f"Unable to start a stack for unknown Type {stack_type}"
+    if stack_type not in {"Proxy", "Alarm"}:
+        raise ValueError(f"Unable to delete a stack for unknown type {stack_type}")
 
     logger.info(
         f"Start destroying {stack_type} stack for an imported OpenSearch domain"
@@ -975,10 +973,8 @@ def start_sub_stack(id, input, stack_type="Proxy"):
         str: Default to 'OK'
     """
 
-    assert stack_type in [
-        "Proxy",
-        "Alarm",
-    ], f"Unable to start a stack for unknown Type {stack_type}"
+    if stack_type not in {"Proxy", "Alarm"}:
+        raise ValueError(f"Unable to start a stack for unknown type {stack_type}")
     logger.info(f"Start deploying {stack_type} stack for an imported OpenSearch domain")
 
     stack_name = create_stack_name(stack_type, str(uuid.uuid4()))

@@ -259,10 +259,7 @@ def lambda_handler(event, context):
         "version": "MyVersion",
     }
 
-    try:
-        returning_json["failureReason"] = failure_reason
-    except Exception:
-        pass
+    returning_json["failureReason"] = failure_reason
 
     logger.info(returning_json)
 
